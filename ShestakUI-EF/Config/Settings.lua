@@ -9,18 +9,18 @@ local T, C, L, _ = unpack(select(2, ...))
 --	Media options
 ----------------------------------------------------------------------------------------
 C["media"] = {
-	["normal_font"] = [[Interface\AddOns\ShestakUI\Media\Fonts\Normal.ttf]],		-- Normal font
-	["blank_font"] = [[Interface\AddOns\ShestakUI\Media\Fonts\Blank.ttf]],			-- Blank font
-	["pixel_font"] = [[Interface\AddOns\ShestakUI\Media\Fonts\Pixel.ttf]],			-- Pixel font
+	["normal_font"] = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Normal.ttf]],		-- Normal font
+	["blank_font"] = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Blank.ttf]],			-- Blank font
+	["pixel_font"] = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Pixel.ttf]],			-- Pixel font
 	["pixel_font_style"] = "OUTLINEMONOCHROME",										-- Pixel font style("OUTLINEMONOCHROME" or "OUTLINE")
 	["pixel_font_size"] = 8,														-- Pixel font size for those places where it is not specified
-	["blank"] = [[Interface\AddOns\ShestakUI\Media\Textures\White.tga]],			-- Texture for borders
-	["texture"] = [[Interface\AddOns\ShestakUI\Media\Textures\Texture.tga]],		-- Texture for status bars
-	["highlight"] = [[Interface\AddOns\ShestakUI\Media\Textures\Highlight.tga]],	-- Texture for debuffs highlight
-	["whisp_sound"] = [[Interface\AddOns\ShestakUI\Media\Sounds\Whisper.ogg]],		-- Sound for whispers
-	["warning_sound"] = [[Interface\AddOns\ShestakUI\Media\Sounds\Warning.ogg]],	-- Sound for warning
-	["proc_sound"] = [[Interface\AddOns\ShestakUI\Media\Sounds\Proc.ogg]],			-- Sound for procs
-	["border_color"] = {0.37, 0.3, 0.3, 1},		-- Color for borders
+	["blank"] = [[Interface\AddOns\ShestakUI-EF\Media\Textures\White.tga]],			-- Texture for borders
+	["texture"] = [[Interface\AddOns\ShestakUI-EF\Media\Textures\Texture.tga]],		-- Texture for status bars
+	["highlight"] = [[Interface\AddOns\ShestakUI-EF\Media\Textures\Highlight.tga]],	-- Texture for debuffs highlight
+	["whisp_sound"] = [[Interface\AddOns\ShestakUI-EF\Media\Sounds\Whisper.ogg]],		-- Sound for whispers
+	["warning_sound"] = [[Interface\AddOns\ShestakUI-EF\Media\Sounds\Warning.ogg]],	-- Sound for warning
+	["proc_sound"] = [[Interface\AddOns\ShestakUI-EF\Media\Sounds\Proc.ogg]],			-- Sound for procs
+	["border_color"] = {0.1, 0.1, 0.1, 1},		-- Color for borders
 	["backdrop_color"] = {0, 0, 0, 1},			-- Color for borders backdrop
 	["overlay_color"] = {0, 0, 0, 0.7},			-- Color for action bars overlay
 }
@@ -580,3 +580,13 @@ C["error"] = {
 	["white"] = false,							-- Show errors from white list
 	["combat"] = false,							-- Hide all errors in combat
 }
+
+----------------------------------------------------------------------------------------
+--	EF options
+----------------------------------------------------------------------------------------
+C["ef"] = {
+	["ef_layout"] = false,						-- Use EF layout
+	["use_custom_color"] = false,				-- Set your color for lines, skins, frames
+	["custom_color"] = {0.4, 0.4, 0.4},			-- Color if ["use_custom_color"] = true
+	["use_shadow"] = false,						-- Set shadow on frames
+}	
