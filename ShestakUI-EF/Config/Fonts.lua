@@ -271,3 +271,24 @@ elseif T.client == "zhCN" then
 	C["font"].bags_font_style = "OUTLINE"
 	C["font"].bags_font_shadow = true
 end
+
+----------------------------------------------------------------------------------------
+--	EF custom fonts
+----------------------------------------------------------------------------------------
+if C.ef.use_custom_fonts then
+	C["media"].visitor_font = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Visitor.ttf]]				-- Visitor font
+	C["media"].archangelsk_font = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Archangelsk.ttf]]		-- Archangelsk font
+	C["media"].sans_narrow_font = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\PT_Sans_Narrow.ttf]]	-- PT_Sans_Narrow font
+	C["media"].roboto_font = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\roboto.ttf]]				-- roboto font
+	
+	-- Stats font
+	C["font"].stats_font = C.media.visitor_font
+	C["font"].stats_font_size = 11
+
+	-- Stylization font
+	C["font"].stylization_font = C.media.visitor_font
+	C["font"].stylization_font_size = 10
+	
+	-- Chat font
+	C["font"].chat_font = C.media.sans_narrow_font
+end
