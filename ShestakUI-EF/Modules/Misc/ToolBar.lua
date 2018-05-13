@@ -81,26 +81,28 @@ local damagemeter = false
 local LootShow = function()
 	ChatFrame3:ClearAllPoints()	
 	if C.chat.background == true then
-		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5] + 4)
+		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5]+4)
 		if C.chat.tabs_mouseover == true then
 			TooltipAnchor:SetPoint("BOTTOMRIGHT", ChatBackgroundRight, "TOPRIGHT", 0, 3)
 		else
 			TooltipAnchor:SetPoint("BOTTOMRIGHT", ChatTabsPanelRight, "TOPRIGHT", 0, 3)
 		end
 	else
-		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5])
+		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5]+4)
 		TooltipAnchor:SetPoint("BOTTOMRIGHT", RightPanel, "TOPRIGHT", 0, 3)
+		RightPanel:Show()			
 	end
 	lootButton.t:SetAlpha(1)
-	ChatFrame3Tab:Show()
+	--ChatFrame3Tab:Show()
 	SavedOptionsPerChar.LootFrame = true
 end
 
 local LootHide = function()
 	ChatFrame3:ClearAllPoints()
 	ChatFrame3:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 20, 0)	
+	if C.chat.background ~= true then RightPanel:Hide() end													
 	lootButton.t:SetAlpha(0)
-	ChatFrame3Tab:Hide()
+	--ChatFrame3Tab:Hide()
 	SavedOptionsPerChar.LootFrame = false
 end
 
@@ -340,7 +342,7 @@ frame:HookScript("OnEvent", function(self, event)
 			detailsEmbedInit()		
 		else
 			damagemeter = false
-		end
+		end		
 		lootFrameInit()
 		if SavedOptionsPerChar.LootFrame == nil then SavedOptionsPerChar.LootFrame = true end
 		if SavedOptionsPerChar.DamageMeter == nil then SavedOptionsPerChar.DamageMeter = false end

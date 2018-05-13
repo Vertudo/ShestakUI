@@ -443,8 +443,8 @@ C["filger"] = {
 C["unitframe"] = {
 	-- Main
 	["enable"] = true,							-- Enable unit frames
-	["own_color"] = false,						-- Set your color for health bars
-	["uf_color"] = {0.1, 0.1, 0.1},				-- Color for UF if ["own_color"] = true
+	["own_color"] = true,						-- Set your color for health bars
+	["uf_color"] = {0.4, 0.4, 0.4},				-- Color for UF if ["own_color"] = true
 	["enemy_health_color"] = true,				-- If enable, enemy target color is red
 	["show_total_value"] = true,				-- Display of info text on player and target with XXXX/Total
 	["color_value"] = true,						-- Health/mana value is colored
@@ -590,7 +590,7 @@ C["ef"] = {
 	["custom_color"] = {r = 0.1, g = 0.5, b = 0.9},	-- Color if ["use_custom_color"] = true
 	["use_shadow"] = true,							-- Set shadow on frames
 	["use_actionbar_panels"] = true,				-- Set shadow panels under bars
-	["use_right_toolbar"] = true,					-- Switch on right toolbar	
+	["use_right_toolbar"] = false,					-- Switch on right toolbar	
 	["right_toolbar_mouseover"] = false,			-- Toolbar on mouseover	
 	["use_custom_fonts"] = true,					-- Custom Fonts
 }	

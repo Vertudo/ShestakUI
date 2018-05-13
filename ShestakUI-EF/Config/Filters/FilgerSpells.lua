@@ -76,6 +76,7 @@ C["filger_spells"] = {
 			{spellID = 53365, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Dark Transformation
 			{spellID = 63560, unitID = "pet", caster = "player", filter = "BUFF"},
+			
 
 			-- Trinkets
 			-- Alchemy Stones
@@ -3545,6 +3546,12 @@ C["filger_spells"] = {
 			{spellID = 236380, unitID = "player", caster = "all", filter = "BUFF"},
 			-- Zann'esu Journey [Waist]
 			{spellID = 226852, unitID = "player", caster = "all", filter = "BUFF"},
+			-- Sephuz's Secret
+			{spellID = 208052, unitID = "player", caster = "all", filter = "BUFF"},
+			-- Xavaric's Magnum Opus
+			{spellID = 207472, unitID = "player", caster = "all", filter = "BUFF"},
+			-- Archimonde's Hatred Reborn
+			{spellID = 235169, unitID = "player", caster = "all", filter = "BUFF"},
 
 			-- Professions
 			-- Goblin Glider [Goblin Glider Kit]
@@ -3629,6 +3636,8 @@ C["filger_spells"] = {
 			{spellID = 130, unitID = "player", caster = "all", filter = "BUFF"},
 			-- Levitate
 			{spellID = 1706, unitID = "player", caster = "all", filter = "BUFF"},
+			-- Concordance of the Legionfall
+			{spellID = 242586, unitID = "player", caster = "all", filter = "BUFF"},			
 		},
 		{
 			Name = "PVE/PVP_DEBUFF",

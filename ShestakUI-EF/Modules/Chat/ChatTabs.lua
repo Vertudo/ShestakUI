@@ -102,7 +102,7 @@ end)
 hooksecurefunc("FCFTab_UpdateColors", faneifyTab)
 
 for i = 1, NUM_CHAT_WINDOWS do
-	if C.ef.use_right_toolbar and i == 3 and C.chat.background ~= true or C.chat.tabs_mouseover == true then
+	if i == 3 and C.chat.background ~= true or C.chat.tabs_mouseover == true then
 		_G["ChatFrame"..i.."Tab"]:Kill()
 	else
 		faneifyTab(_G["ChatFrame"..i.."Tab"])

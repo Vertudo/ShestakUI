@@ -32,6 +32,9 @@ T.RaidBuffs = {
 		{204013, "BOTTOMRIGHT", {0.93, 0.75, 0}, true},		-- Blessing of Salvation
 		{6940, "BOTTOMRIGHT", {0.89, 0.1, 0.1}, true},		-- Blessing of Sacrifice
 		{204018, "BOTTOMRIGHT", {0.4, 0.6, 0.8}, true},		-- Blessing of Spellwarding
+		{200653, "TOPLEFT", {0.1, 0.4, 0.9}},				-- Tyr's Deliverance
+		{243174, "BOTTOMLEFT", {0.9, 0.6, 0.4}},			-- Sacred Dawn
+		{223306, "LEFT", {0.4, 0.9, 0.4}},					-- Bestow Faith			
 	},
 	PRIEST = {
 		{194384, "TOPRIGHT", {0.8, 0.4, 0.2}},				-- Atonement
@@ -62,6 +65,7 @@ T.RaidBuffs = {
 		{23333, "LEFT", {1, 0, 0}, true}, 					-- Warsong flag, Horde
 		{23335, "LEFT", {0, 0, 1}, true},					-- Warsong flag, Alliance
 		{34976, "LEFT", {1, 0, 0}, true}, 					-- Netherstorm Flag
+		{242467, "RIGHT", {0, 0, 1}, true}, 				-- Ocean's Embrace
 	},
 }
 
@@ -244,12 +248,12 @@ T.RaidDebuffs = {
 	[SpellName(252616)] = 4, -- Cosmic Beacon
 	[SpellName(255200)] = 3, -- Aggramar's Boon
 	[SpellName(255199)] = 4, -- Avatar of Aggramar
-	[SpellName(258647)] = 3, -- Gift of the Sea
-	[SpellName(253901)] = 3, -- Strength of the Sea
+	--[SpellName(258647)] = 3, -- Gift of the Sea
+	--[SpellName(253901)] = 3, -- Strength of the Sea
 	[SpellName(257299)] = 4, -- Ember of Rage
 	[SpellName(248167)] = 3, -- Death Fog
-	[SpellName(258646)] = 3, -- Gift of the Sky
-	[SpellName(253903)] = 3, -- Strength of the Sky
+	--[SpellName(258646)] = 3, -- Gift of the Sky
+	--[SpellName(253903)] = 3, -- Strength of the Sky
 	
 -- Tomb of Sargeras
 	-- Goroth
@@ -417,6 +421,7 @@ T.RaidDebuffs = {
 	[SpellName(221772)] = 5,	-- Overflowing
 	[SpellName(209858)] = 5,	-- Necrotic
 	[SpellName(226512)] = 5,	-- Sanguine
+	[SpellName(43937)] = 5,		-- Grievous Wound	
 -- Black Rook Hold
 	-- Trash Mobs
 	[SpellName(194969)] = 3,	-- Soul Echoes
@@ -570,6 +575,11 @@ T.RaidDebuffs = {
 	[SpellName(202062)] = 3,	-- Frigid Winds
 	-- Lord Malgath
 	[SpellName(204962)] = 3,	-- Shadow Bomb
+-- Karazhan	
+	-- Moroes
+	[SpellName(227742)] = 4,	-- Garrote
+	-- Nightbane
+	[SpellName(228796)] = 3,	-- Ignite Soul	
 -----------------------------------------------------------------
 -- Other
 -----------------------------------------------------------------

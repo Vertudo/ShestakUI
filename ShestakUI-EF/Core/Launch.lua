@@ -28,6 +28,9 @@ local function InstallUI()
 
 	-- Setting chat frames
 	if C.chat.enable == true and not (IsAddOnLoaded("Prat-3.0") or IsAddOnLoaded("Chatter")) then
+		FCF_OpenNewWindow(LOOT)
+		FCF_SetLocked(ChatFrame3, 1)
+		FCF_UnDockFrame(ChatFrame3)
 		for i = 1, NUM_CHAT_WINDOWS do
 			local frame = _G[format("ChatFrame%s", i)]
 			local chatFrameId = frame:GetID()
@@ -42,6 +45,10 @@ local function InstallUI()
 			if i == 1 then
 				frame:ClearAllPoints()
 				frame:SetPoint(unpack(C.position.chat))
+			elseif i == 3 then
+				frame:ClearAllPoints()
+				frame:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5])
+				frame:SetJustifyH("RIGHT")
 			end
 
 			-- Save new default position and dimension
@@ -57,6 +64,27 @@ local function InstallUI()
 			-- Lock them if unlocked
 			if not frame.isLocked then FCF_SetLocked(frame, 1) end
 		end
+		
+		ChatFrame_RemoveMessageGroup(ChatFrame1, "LOOT")
+		ChatFrame_RemoveMessageGroup(ChatFrame1, "CURRENCY")
+		ChatFrame_RemoveMessageGroup(ChatFrame1, "CHANNEL")
+		ChatFrame_RemoveMessageGroup(ChatFrame1, "MONEY")
+		ChatFrame_RemoveMessageGroup(ChatFrame1, "COMBAT_FACTION_CHANGE")
+		ChatFrame_RemoveMessageGroup(ChatFrame1, "SKILL")
+		ChatFrame_RemoveChannel(ChatFrame1, L_CHAT_GENERAL)
+		ChatFrame_RemoveChannel(ChatFrame1, L_CHAT_TRADE)
+		ChatFrame_RemoveChannel(ChatFrame1, L_CHAT_DEFENSE)
+		ChatFrame_RemoveChannel(ChatFrame1, L_CHAT_RECRUTMENT)
+		ChatFrame_RemoveChannel(ChatFrame1, L_CHAT_LFG)
+
+		ChatFrame_RemoveAllMessageGroups(ChatFrame3)
+		ChatFrame_AddMessageGroup(ChatFrame3, "COMBAT_FACTION_CHANGE")
+		ChatFrame_AddMessageGroup(ChatFrame3, "SKILL")
+		ChatFrame_AddMessageGroup(ChatFrame3, "LOOT")
+		ChatFrame_AddMessageGroup(ChatFrame3, "MONEY")
+		ChatFrame_AddMessageGroup(ChatFrame3, "COMBAT_XP_GAIN")
+		ChatFrame_AddMessageGroup(ChatFrame3, "COMBAT_HONOR_GAIN")
+		ChatFrame_AddMessageGroup(ChatFrame3, "COMBAT_GUILD_XP_GAIN")
 
 		-- Enable classcolor automatically on login and on each character without doing /configure each time
 		ToggleChatColorNamesByClassGroup(true, "SAY")
