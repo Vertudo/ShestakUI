@@ -8,6 +8,7 @@ local cBN = IsAddOnLoaded("cargBags_Nivaya")
 local ctab = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
 local function class(string)
 	local color = ctab[T.class]
+	if C.ef.use_custom_color then color = C.ef.custom_color end -- EF
 	return format("|cff%02x%02x%02x%s|r", color.r * 255, color.g * 255, color.b * 255, string or "")
 end
 
@@ -266,3 +267,40 @@ LPSTAT_PROFILES = {
 		}
 	},
 }
+
+if C.ef.ef_layout then
+	-- Latency
+	LPSTAT_CONFIG.Latency.anchor_frame = "UIParent" 
+	LPSTAT_CONFIG.Latency.anchor_to = "right"
+	LPSTAT_CONFIG.Latency.anchor_from = "bottomright"
+	LPSTAT_CONFIG.Latency.x_off = -17
+	LPSTAT_CONFIG.Latency.y_off = 11
+	LPSTAT_CONFIG.Latency.tip_anchor = "BOTTOMRIGHT"
+	LPSTAT_CONFIG.Latency.tip_x = -21
+	-- Memory
+	LPSTAT_CONFIG.Memory.anchor_frame = C.stats.latency and "Latency"LPSTAT_CONFIG.Memory.anchor_to = "right"
+	LPSTAT_CONFIG.Memory.anchor_from = "left"
+	LPSTAT_CONFIG.Memory.x_off = -3
+	LPSTAT_CONFIG.Memory.tip_anchor = "BOTTOMRIGHT"
+	LPSTAT_CONFIG.Memory.tip_x = -21
+	-- FPS
+	LPSTAT_CONFIG.FPS.anchor_to = "right"
+	LPSTAT_CONFIG.FPS.anchor_from = "left"
+	LPSTAT_CONFIG.FPS.x_off = -3
+	-- Friends
+	LPSTAT_CONFIG.Friends.anchor_frame = "Clock"
+	-- Coords
+	LPSTAT_CONFIG.Coords.anchor_from = "topright"
+	LPSTAT_CONFIG.Coords.y_off = -11
+	-- Location
+	LPSTAT_CONFIG.Location.tip_anchor = "TOPRIGHT"
+	LPSTAT_CONFIG.Location.tip_y = -21
+	-- Stats
+	LPSTAT_CONFIG.Stats.x_off = -20
+	-- Gold
+	LPSTAT_CONFIG.Gold.anchor_frame = cBN and "NivayacBniv_Bag" or C.bag.enable and "StuffingFrameBags" or "FPS"
+	LPSTAT_CONFIG.Gold.anchor_to = "bottomright"
+	LPSTAT_CONFIG.Gold.anchor_from = cBN and "bottomright" or C.bag.enable and "topright" or "left"
+	LPSTAT_CONFIG.Gold.x_off = cBN and -1 or C.bag.enable and -25 or -3
+	LPSTAT_CONFIG.Gold.y_off = cBN and 18 or C.bag.enable and -13 or 0
+end

@@ -1,11 +1,17 @@
 ﻿local T, C, L, _ = unpack(select(2, ...))
 if C.minimap.enable ~= true then return end
 
+-- EF
+local template = "ClassColor"
+if C.ef.use_custom_color then
+	template = "Default"
+end
+
 ----------------------------------------------------------------------------------------
 --	Switch layout mouseover button on minimap
 ----------------------------------------------------------------------------------------
 local switch = CreateFrame("Button", "SwitchLayout", UIParent)
-switch:SetTemplate("ClassColor")
+switch:SetTemplate(template)
 if C.actionbar.toggle_mode == true then
 	switch:SetPoint("TOPLEFT", Minimap, "TOPRIGHT", 3, -18)
 else
@@ -89,7 +95,7 @@ SLASH_FARMMODE4 = "/аь"
 --	Farm mode mouseover button(by m2jest1c)
 ----------------------------------------------------------------------------------------
 local farm = CreateFrame("Button", "FarmMode", UIParent)
-farm:SetTemplate("ClassColor")
+farm:SetTemplate(template)
 farm:SetPoint("TOP", switch, "BOTTOM", 0, -1)
 farm:SetSize(19, 19)
 farm:SetAlpha(0)
@@ -119,7 +125,7 @@ if T.level < 99 then return end
 
 local artifact = CreateFrame("Button", "ArtifactButton", UIParent, "BankItemButtonGenericTemplate")
 artifact:StripTextures()
-artifact:SetTemplate("ClassColor")
+artifact:SetTemplate(template)
 if SwitchArch then
 	artifact:SetPoint("TOP", SwitchArch, "BOTTOM", 0, -1)
 else

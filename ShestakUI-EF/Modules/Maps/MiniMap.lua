@@ -1,11 +1,17 @@
 local T, C, L, _ = unpack(select(2, ...))
 if C.minimap.enable ~= true then return end
 
+-- EF
+local template = "ClassColor"
+if C.ef.use_custom_color then
+	template = "Default"
+end
+
 ----------------------------------------------------------------------------------------
 --	Minimap border
 ----------------------------------------------------------------------------------------
 local MinimapAnchor = CreateFrame("Frame", "MinimapAnchor", UIParent)
-MinimapAnchor:CreatePanel("ClassColor", C.minimap.size, C.minimap.size, unpack(C.position.minimap))
+MinimapAnchor:CreatePanel(template, C.minimap.size, C.minimap.size, unpack(C.position.minimap))
 
 ----------------------------------------------------------------------------------------
 --	Shape, location and scale
@@ -55,7 +61,7 @@ GameTimeFrame:Hide()
 MiniMapMailFrame:ClearAllPoints()
 MiniMapMailFrame:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", 8, -10)
 MiniMapMailBorder:Hide()
-MiniMapMailIcon:SetTexture("Interface\\AddOns\\ShestakUI\\Media\\Textures\\Mail.tga")
+MiniMapMailIcon:SetTexture("Interface\\AddOns\\ShestakUI-EF\\Media\\Textures\\Mail.tga")
 MiniMapMailIcon:SetSize(16, 16)
 
 -- Move QueueStatus icon
@@ -123,7 +129,7 @@ end
 
 -- Ticket icon
 HelpOpenTicketButton:SetParent(Minimap)
-HelpOpenTicketButton:CreateBackdrop("ClassColor")
+HelpOpenTicketButton:CreateBackdrop(template)
 HelpOpenTicketButton:SetFrameLevel(4)
 HelpOpenTicketButton:ClearAllPoints()
 HelpOpenTicketButton:SetPoint("BOTTOM", Minimap, "BOTTOM", 0, 2)
@@ -328,9 +334,17 @@ if C.minimap.tracking_icon then
 	MiniMapTrackingIcon:SetSize(16, 16)
 	MiniMapTrackingIcon.SetPoint = T.dummy
 
-	MiniMapTracking:CreateBackdrop("ClassColor")
+	MiniMapTracking:CreateBackdrop(template)
 	MiniMapTracking.backdrop:SetPoint("TOPLEFT", MiniMapTrackingIcon, -2, 2)
 	MiniMapTracking.backdrop:SetPoint("BOTTOMRIGHT", MiniMapTrackingIcon, 2, -2)
 else
 	MiniMapTracking:Hide()
+end
+
+-- EF
+if C.ef.ef_layout then
+	-- Garrison icon
+	if C.minimap.garrison_icon == true then
+		GarrisonLandingPageMinimapButton:SetPoint("BOTTOMLEFT", Minimap, "BOTTOMLEFT", 0, 2)
+	end
 end

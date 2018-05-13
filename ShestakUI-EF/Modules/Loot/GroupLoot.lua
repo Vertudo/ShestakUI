@@ -289,7 +289,7 @@ end
 
 LootRollAnchor:RegisterEvent("ADDON_LOADED")
 LootRollAnchor:SetScript("OnEvent", function(frame, event, addon)
-	if addon ~= "ShestakUI" then return end
+	if addon ~= "ShestakUI-EF" then return end
 
 	LootRollAnchor:UnregisterEvent("ADDON_LOADED")
 	LootRollAnchor:RegisterEvent("START_LOOT_ROLL")

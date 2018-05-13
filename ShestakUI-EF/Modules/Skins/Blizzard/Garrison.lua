@@ -11,7 +11,7 @@ LoadTootlipSkin:SetScript("OnEvent", function(self, event, addon)
 		return
 	end
 
-	if addon == "ShestakUI" then
+	if addon == "ShestakUI-EF" then
 		local Tooltips = {
 			FloatingGarrisonFollowerTooltip,
 			FloatingGarrisonFollowerAbilityTooltip,

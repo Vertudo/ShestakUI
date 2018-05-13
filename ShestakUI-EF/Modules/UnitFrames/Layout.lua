@@ -9,6 +9,11 @@ local oUF = ns.oUF
 
 -- Create layout
 local function Shared(self, unit)
+	-- EF
+	local template = ""
+	if C.ef.use_shadow then
+		template = "Shadow"
+	end
 	-- Set our own colors
 	self.colors = T.oUF_colors
 
@@ -33,7 +38,7 @@ local function Shared(self, unit)
 	-- Backdrop for every units
 	self:CreateBackdrop("Default")
 	self:SetFrameStrata("BACKGROUND")
-	self.backdrop:SetFrameLevel(3)
+	self:SetFrameLevel(3)
 
 	-- Health bar
 	self.Health = CreateFrame("StatusBar", self:GetName().."_Health", self)
@@ -204,7 +209,7 @@ local function Shared(self, unit)
 			end
 			self:Tag(self.Info, "[GetNameColor][NameMedium]")
 		else
-			self.Info:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
+				self.Info:SetPoint("RIGHT", self.Health, "RIGHT", 0, 0)
 			self:Tag(self.Info, "[GetNameColor][NameMedium]")
 		end
 	end
@@ -261,7 +266,11 @@ local function Shared(self, unit)
 		if C.unitframe_class_bar.rune == true and T.class == "DEATHKNIGHT" then
 			self.Runes = CreateFrame("Frame", self:GetName().."_RuneBar", self)
 			self.Runes:CreateBackdrop("Default")
-			self.Runes:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
+			if C.ef.ef_layout then
+				self.Runes:SetPoint("BOTTOM", self, "TOP", 0, -1)
+			else
+				self.Runes:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
+			end
 			self.Runes:SetSize(217, 7)
 
 			for i = 1, 6 do
@@ -405,16 +414,31 @@ local function Shared(self, unit)
 
 		-- Holy Power bar
 		if C.unitframe_class_bar.holy == true and T.class == "PALADIN" then
-			self.HolyPower = CreateFrame("Frame", self:GetName().."_HolyPowerBar", self)
-			self.HolyPower:CreateBackdrop("Default")
-			self.HolyPower:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
-			self.HolyPower:SetSize(217, 7)
+			self.HolyPower = CreateFrame("Frame", self:GetName().."_HolyPowerBar", self)			
+			if C.ef.ef_layout then		
+				self.HolyPower:CreateBackdrop("Default", template)
+				self.HolyPower:SetFrameLevel(self.Health:GetFrameLevel() + 2)
+				self.HolyPower:SetPoint("BOTTOM", self, "TOP", 0, -1)
+				self.HolyPower:SetSize(180, 7)							
+			else
+				self.HolyPower:CreateBackdrop("Default")
+				self.HolyPower:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
+				self.HolyPower:SetSize(217, 7)
+			end					
 
 			for i = 1, 5 do
 				self.HolyPower[i] = CreateFrame("StatusBar", self:GetName().."_HolyPower"..i, self.HolyPower)
-				self.HolyPower[i]:SetSize(213 / 5, 7)
-				if i == 1 then
-					self.HolyPower[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
+				if C.ef.ef_layout then
+					self.HolyPower[i]:SetSize(176 / 5, 7)
+				else
+					self.HolyPower[i]:SetSize(213 / 5, 7)				
+				end
+				if i == 1 then					
+					if C.ef.ef_layout then
+						self.HolyPower[i]:SetPoint("LEFT", self.HolyPower, "LEFT", 0, 0)
+					else
+						self.HolyPower[i]:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
+					end
 				else
 					self.HolyPower[i]:SetPoint("TOPLEFT", self.HolyPower[i-1], "TOPRIGHT", 1, 0)
 				end
@@ -455,14 +479,25 @@ local function Shared(self, unit)
 
 		-- Rogue/Druid Combo bar
 		if C.unitframe_class_bar.combo == true and C.unitframe_class_bar.combo_old ~= true and (T.class == "ROGUE" or T.class == "DRUID") then
-			self.CPoints = CreateFrame("Frame", self:GetName().."_ComboBar", self)
-			self.CPoints:CreateBackdrop("Default")
-			self.CPoints:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
-			self.CPoints:SetSize(217, 7)
-
+			self.CPoints = CreateFrame("Frame", self:GetName().."_ComboBar", self)			
+			if C.ef.ef_layout then
+				self.CPoints:SetFrameLevel(self.Health:GetFrameLevel() + 2)
+				self.CPoints:CreateBackdrop("Default", template)				
+				self.CPoints:SetPoint("BOTTOM", self, "TOP", 0, -1)
+				self.CPoints:SetSize(180, 7)								
+			else
+				self.CPoints:CreateBackdrop("Default")			
+				self.CPoints:SetPoint("BOTTOMLEFT", self, "TOPLEFT", 0, 7)
+				self.CPoints:SetSize(217, 7)
+			end											
+			
 			for i = 1, 10 do
 				self.CPoints[i] = CreateFrame("StatusBar", self:GetName().."_ComboBar", self.CPoints)
-				self.CPoints[i]:SetSize(213 / 10, 7)
+				if C.ef.ef_layout then
+					self.CPoints[i]:SetSize(180 / 10, 7)
+				else
+					self.CPoints[i]:SetSize(213 / 10, 7)
+				end
 				if i == 1 then
 					self.CPoints[i]:SetPoint("LEFT", self.CPoints)
 				else
@@ -1252,6 +1287,56 @@ local function Shared(self, unit)
 		self.NormalAlpha = 1
 	end
 
+	-- EF begin
+	if C.ef.use_custom_color then
+		self.Health.bg:SetVertexColor(C.ef.custom_color.r, C.ef.custom_color.g, C.ef.custom_color.b, 0.4)
+		
+		self.Power.colorClass = false	
+
+		if unit == "pet" then
+			self.Power.bg:SetVertexColor(C.ef.custom_color.r, C.ef.custom_color.g, C.ef.custom_color.b, 0.4)
+		end
+	end
+	if C.ef.ef_layout then
+		if unit == "player" or unit == "target" then				  
+			self.Health:SetHeight(27)
+		elseif unit == "boss" or unit == "arena" or unit == "arenatarget" then
+			self.Health:SetHeight(21)	
+		end
+		
+		if unit == "player" or unit == "target" then
+			self.Power:SetHeight(9)	
+		end
+		
+		if unit == "player" then
+			self.Power:SetPoint("TOPLEFT", self.Health, "BOTTOM", -5, 1)
+			self.Power:SetPoint("TOPRIGHT", self.Health, "BOTTOMRIGHT", -5, 1)
+		elseif unit == "target" then
+			self.Power:SetPoint("TOPLEFT", self.Health, "BOTTOMLEFT", 5, 1)
+			self.Power:SetPoint("TOPRIGHT", self.Health, "BOTTOM", 5, 1)
+		else
+			self.Power:SetPoint("TOPLEFT", self.Health, "BOTTOMLEFT", 5, -1)
+			self.Power:SetPoint("TOPRIGHT", self.Health, "BOTTOMRIGHT", -5, -1)
+		end
+		
+		if unit == "target" then
+			self:Tag(self.Info, "[GetNameColor][NameLong] [DiffColor][level][shortclassification]")
+			self:Tag(self.Level, "[Threat]")
+		end
+		
+		-- Resting icon
+		if C.unitframe.icons_resting == true and T.level ~= MAX_PLAYER_LEVEL then
+			self.Resting = self.Health:CreateTexture(nil, "OVERLAY")
+			self.Resting:SetSize(18, 18)
+			self.Resting:SetPoint("BOTTOMLEFT", -8, -8)			
+		end
+	end
+	if C.ef.use_shadow then	
+		self.Power:CreateBackdrop("Default", "Shadow")
+		self.Power:SetFrameLevel(self.Health:GetFrameLevel() + 2)	
+	end
+	-- EF end	
+	
 	T.HideAuraFrame(self)
 	return self
 end

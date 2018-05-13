@@ -4,6 +4,12 @@ if C.raidcooldown.enable ~= true then return end
 ----------------------------------------------------------------------------------------
 --	Raid cooldowns(alRaidCD by Allez, msylgj0@NGACN)
 ----------------------------------------------------------------------------------------
+--EF
+local shadow = ""
+if C.ef.use_shadow then
+	shadow = "Shadow"
+end
+
 local show = {
 	raid = C.raidcooldown.show_inraid,
 	party = C.raidcooldown.show_inparty,
@@ -161,7 +167,7 @@ local CreateBar = function()
 	end
 	bar:SetStatusBarTexture(C.media.texture)
 	bar:SetMinMaxValues(0, 100)
-	bar:CreateBackdrop("Default")
+	bar:CreateBackdrop("Default", shadow)
 
 	bar.bg = bar:CreateTexture(nil, "BACKGROUND")
 	bar.bg:SetAllPoints(bar)
@@ -181,7 +187,7 @@ local CreateBar = function()
 		bar.icon:SetWidth(bar:GetHeight() + 6)
 		bar.icon:SetHeight(bar.icon:GetWidth())
 		bar.icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -7, 0)
-		bar.icon:CreateBackdrop("Default")
+		bar.icon:CreateBackdrop("Default", shadow)
 	end
 	return bar
 end
@@ -201,6 +207,9 @@ local StartTimer = function(name, spellId)
 	end
 	local bar = CreateBar()
 	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[select(2, UnitClass(name))]
+	if C.ef.use_custom_color then
+		color = C.ef.custom_color
+	end
 	if charges and spellId == 20484 then
 		local curCharges, _, start, duration = GetSpellCharges(20484)
 		currentNumResses = curCharges

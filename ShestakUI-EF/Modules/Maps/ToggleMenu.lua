@@ -175,15 +175,51 @@ local function updateTextures(button, checkable)
 	button:HookScript("OnLeave", T.SetOriginalBackdrop)
 end
 
+-- EF
+local position = C.position.minimap[3]
+
+local v, vr, vf, h, hr, hf
+
+local updposition = function()
+	if position == "TOPLEFT" or position == "TOP" or position == "TOPRIGHT" then
+		v = "TOP"
+		vr = "BOTTOM"
+		vf = -1
+	else
+		v = "BOTTOM"
+		vr = "TOP"
+		vf = 1
+	end
+	if position == "TOPLEFT" or position == "LEFT" or position == "BOTTOMLEFT"then
+		h = "LEFT"
+		hr = "RIGHT"
+		hf = 1
+	else
+		h = "RIGHT"
+		hr = "LEFT"
+		hf = -1
+	end
+end
+
+updposition()
+
 local MenuBG = CreateFrame("Frame", "TTMenuBackground", UIParent)
-MenuBG:CreatePanel("Transparent", borderwidth(1), 1, "BOTTOMRIGHT", Minimap, "TOPRIGHT", 2, 3)
+if C.ef.ef_layout then
+	MenuBG:CreatePanel("Transparent", borderwidth(1), 1, v..hr, Minimap, vr..hr, 2 * hf, 3 * vf)
+else
+	MenuBG:CreatePanel("Transparent", borderwidth(1), 1, "BOTTOMRIGHT", Minimap, "TOPRIGHT", 2, 3)
+end
 MenuBG:SetFrameLevel(defaultframelevel)
 MenuBG:SetFrameStrata("HIGH")
 MenuBG:EnableMouse(true)
 MenuBG:Hide()
 
 local AddonBG = CreateFrame("Frame", "TTMenuAddOnBackground", UIParent)
-AddonBG:CreatePanel("Transparent", borderwidth(1), 1, "BOTTOMRIGHT", MenuBG, "BOTTOMRIGHT", 0, 0)
+if C.ef.ef_layout then
+	AddonBG:CreatePanel("Transparent", borderwidth(1), 1, v..h, MenuBG, v..h, 0, 0)
+else
+	AddonBG:CreatePanel("Transparent", borderwidth(1), 1, "BOTTOMRIGHT", MenuBG, "BOTTOMRIGHT", 0, 0)
+end
 AddonBG:SetFrameLevel(defaultframelevel)
 AddonBG:SetFrameStrata("HIGH")
 AddonBG:EnableMouse(true)
@@ -226,13 +262,25 @@ local function addMainMenuButtons(menuItems, menuName, menuBackground)
 	for index, value in ipairs(C.togglemainmenu) do
 		if value.text then
 			menuItems[index] = CreateFrame("Button", menuName..index, menuBackground)
-			menuItems[index]:CreatePanel("Overlay", buttonwidth(1), buttonheight(1), "BOTTOM", menuBackground, "BOTTOM", 0, buttonspacing(1))
+			if C.ef.ef_layout then
+				menuItems[index]:CreatePanel("Overlay", buttonwidth(1), buttonheight(1), v, menuBackground, v, 0, buttonspacing(1) * vf)		
+			else
+				menuItems[index]:CreatePanel("Overlay", buttonwidth(1), buttonheight(1), "BOTTOM", menuBackground, "BOTTOM", 0, buttonspacing(1))				
+			end
 			menuItems[index]:SetFrameLevel(defaultframelevel + 1)
 			menuItems[index]:SetFrameStrata("HIGH")
-			if mainmenusize == 0 then
-				menuItems[index]:SetPoint("BOTTOMRIGHT", menuBackground, "BOTTOMRIGHT", buttonspacing(-1), buttonspacing(-1))
+			if C.ef.ef_layout then
+				if mainmenusize == 0 then
+					menuItems[index]:SetPoint(v..h, menuBackground, v..h, buttonspacing(1) * hf, buttonspacing(1) * vf)
+				else
+					menuItems[index]:SetPoint(v, menuItems[lastMainMenuEntryID], vr, 0, buttonspacing(1) * vf)
+				end		
 			else
-				menuItems[index]:SetPoint("BOTTOM", menuItems[lastMainMenuEntryID], "TOP", 0, buttonspacing(1))
+				if mainmenusize == 0 then
+					menuItems[index]:SetPoint("BOTTOMRIGHT", menuBackground, "BOTTOMRIGHT", buttonspacing(-1), buttonspacing(-1))
+				else
+					menuItems[index]:SetPoint("BOTTOM", menuItems[lastMainMenuEntryID], "TOP", 0, buttonspacing(1))
+				end
 			end
 			menuItems[index]:EnableMouse(true)
 			menuItems[index]:RegisterForClicks("AnyUp")
@@ -260,7 +308,11 @@ local addonmenuitems = {}
 addMainMenuButtons(addonmenuitems, "AddonMenu", AddonBG)
 
 local OpenMenuBG = CreateFrame("Button", "TTOpenMenuBackground", UIParent)
-OpenMenuBG:CreatePanel("Overlay", borderwidth(1), buttonheight(1) / 1.3, "BOTTOM", MenuBG, "BOTTOM", 0, 0)
+if C.ef.ef_layout then
+	OpenMenuBG:CreatePanel("Overlay", borderwidth(1), buttonheight(1) / 1.3, v, MenuBG, v, 0, 0)	
+else
+	OpenMenuBG:CreatePanel("Overlay", borderwidth(1), buttonheight(1) / 1.3, "BOTTOM", MenuBG, "BOTTOM", 0, 0)
+end
 OpenMenuBG:EnableMouse(true)
 OpenMenuBG:RegisterForClicks("AnyUp")
 OpenMenuBG:SetFrameLevel(defaultframelevel)
@@ -287,7 +339,11 @@ Text:SetTextColor(0.3, 0.3, 0.9)
 TTOpenMenuBackground:FadeOut()
 
 local expandbutton = CreateFrame("Button", "AddonMenuExpandButton", AddonBG)
-expandbutton:CreatePanel("Overlay", buttonwidth(1), buttonheight(1) / 2, "TOP", AddonBG, "TOP", 0, buttonspacing(-1))
+if C.ef.ef_layout then
+	expandbutton:CreatePanel("Overlay", buttonwidth(1), buttonheight(1) / 2, vr, AddonBG, vr, 0, buttonspacing(1) * vf * -1)
+else
+	expandbutton:CreatePanel("Overlay", buttonwidth(1), buttonheight(1) / 2, "TOP", AddonBG, "TOP", 0, buttonspacing(-1))
+end
 expandbutton:EnableMouse(true)
 expandbutton:RegisterForClicks("AnyUp")
 expandbutton:SetFrameLevel(defaultframelevel + 1)
@@ -394,10 +450,18 @@ local function refreshAddOnMenu()
 		if addonInfo[i].is_main or addonInfo[i].parent == i or not addonInfo[addonInfo[i].parent].collapsed then
 			if (not addonToggleOnly or (C.toggleaddons[name] and IsAddOnLoaded(i))) then
 				addonmenuitems[j]:ClearAllPoints()
-				if menusize % menuheight == 0 then
-					addonmenuitems[j]:SetPoint("BOTTOMRIGHT", addonmenuitems[lastMenuEntryID], "BOTTOMLEFT", buttonspacing(-1), (buttonheight(-menuheight + 1) + buttonspacing(-menuheight + 1)))
+				if C.ef.ef_layout then
+					if menusize % menuheight == 0 then
+						addonmenuitems[j]:SetPoint(v..h, addonmenuitems[lastMenuEntryID], v..hr, buttonspacing(1) * hf, (buttonheight(-1 * vf * menuheight + 1 * vf) + buttonspacing(-1 * vf * menuheight + 1 * vf)))
+					else
+						addonmenuitems[j]:SetPoint(v, addonmenuitems[lastMenuEntryID], vr, 0, buttonspacing(1) * vf)
+					end				
 				else
-					addonmenuitems[j]:SetPoint("BOTTOM", addonmenuitems[lastMenuEntryID], "TOP", 0, buttonspacing(1))
+					if menusize % menuheight == 0 then
+						addonmenuitems[j]:SetPoint("BOTTOMRIGHT", addonmenuitems[lastMenuEntryID], "BOTTOMLEFT", buttonspacing(-1), (buttonheight(-menuheight + 1) + buttonspacing(-menuheight + 1)))
+					else
+						addonmenuitems[j]:SetPoint("BOTTOM", addonmenuitems[lastMenuEntryID], "TOP", 0, buttonspacing(1))
+					end
 				end
 				addonmenuitems[j]:Show()
 				lastMenuEntryID = j
@@ -471,7 +535,11 @@ for i = 1, GetNumAddOns() do
 	Text:SetHeight(C.media.pixel_font_size)
 	if addonInfo[i].is_main then
 		local expandAddonButton = CreateFrame("Button", "AddonMenuExpand"..j, addonmenuitems[j])
-		expandAddonButton:CreatePanel("Overlay", buttonheight(1) - 4, buttonheight(1) - 4, "TOPLEFT", addonmenuitems[j], "TOPLEFT", 2, -2)
+		if C.ef.ef_layout then
+			expandAddonButton:CreatePanel("Overlay", buttonheight(1) - 4, buttonheight(1) - 4, "TOP"..hr, addonmenuitems[j], "TOP"..hr, 2 * hf * -1, -2)		
+		else
+			expandAddonButton:CreatePanel("Overlay", buttonheight(1) - 4, buttonheight(1) - 4, "TOPLEFT", addonmenuitems[j], "TOPLEFT", 2, -2)
+		end
 		expandAddonButton:SetFrameLevel(defaultframelevel + 2)
 		expandAddonButton:SetFrameStrata("HIGH")
 		expandAddonButton:EnableMouse(true)

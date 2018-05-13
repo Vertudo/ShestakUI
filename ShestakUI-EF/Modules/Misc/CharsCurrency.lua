@@ -158,7 +158,7 @@ local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
 frame:SetScript("OnEvent", function(self, event, addon)
 	if event == "ADDON_LOADED" then
-		if addon ~= "ShestakUI" then return end
+		if addon ~= "ShestakUI-EF" then return end
 
 		if not SavedCurrency then SavedCurrency = {} end
 		if not SavedCurrency[T.realm] then SavedCurrency[T.realm] = {} end

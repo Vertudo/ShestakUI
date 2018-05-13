@@ -1071,7 +1071,7 @@ function Stuffing:SetBagsForSorting(c)
 end
 
 function Stuffing:ADDON_LOADED(addon)
-	if addon ~= "ShestakUI" then return nil end
+	if addon ~= "ShestakUI-EF" then return nil end
 
 	self:RegisterEvent("BAG_UPDATE")
 	self:RegisterEvent("ITEM_LOCK_CHANGED")

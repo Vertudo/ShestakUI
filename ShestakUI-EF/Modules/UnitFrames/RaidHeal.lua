@@ -67,7 +67,9 @@ local function Shared(self, unit)
 	self.Health.bg = self.Health:CreateTexture(nil, "BORDER")
 	self.Health.bg:SetAllPoints(self.Health)
 	self.Health.bg:SetTexture(C.media.texture)
-	if C.unitframe.own_color == true then
+	if C.ef.use_custom_color then
+		self.Health.bg:SetVertexColor(C.ef.custom_color.r, C.ef.custom_color.g, C.ef.custom_color.b, 0.4)	
+	elseif C.unitframe.own_color == true then
 		self.Health.bg:SetVertexColor(C.unitframe.uf_color[1], C.unitframe.uf_color[2], C.unitframe.uf_color[3], 0.2)
 	else
 		self.Health.bg.multiplier = 0.2

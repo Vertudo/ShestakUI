@@ -1,5 +1,19 @@
 local T, C, L, _ = unpack(select(2, ...))
 
+-- EF
+local template = "ClassColor"
+if C.ef.use_custom_color then
+	template = "Default"
+end
+local shadow = ""
+if C.ef.use_shadow then
+	shadow = "Shadow"
+end
+local borderColor = T.color;
+if C.ef.use_custom_color then
+	borderColor = {r = C.media.border_color[1], g = C.media.border_color[2], b = C.media.border_color[3]}
+end
+
 ----------------------------------------------------------------------------------------
 --	Bottom bars anchor
 ----------------------------------------------------------------------------------------
@@ -55,6 +69,8 @@ end
 local petbaranchor = CreateFrame("Frame", "PetActionBarAnchor", oUF_PetBattleFrameHider)
 if C.actionbar.petbar_horizontal == true then
 	petbaranchor:CreatePanel("Invisible", (C.actionbar.button_size * 10) + (C.actionbar.button_space * 9), (C.actionbar.button_size + C.actionbar.button_space), unpack(C.position.pet_horizontal))
+elseif C.ef.use_actionbar_panels == true then
+	petbaranchor:CreatePanel("Invisible", C.actionbar.button_size, (C.actionbar.button_size * 10) + (C.actionbar.button_space * 9), "RIGHT", rightbaranchor, "LEFT", -5, 0)	 
 elseif C.actionbar.rightbars > 0 then
 	petbaranchor:CreatePanel("Invisible", C.actionbar.button_size + 3, (C.actionbar.button_size * 10) + (C.actionbar.button_space * 9), "RIGHT", rightbaranchor, "LEFT", 0, 0)
 else
@@ -90,28 +106,30 @@ end)
 --	Bottom line
 ----------------------------------------------------------------------------------------
 local bottompanel = CreateFrame("Frame", "BottomPanel", UIParent)
-bottompanel:CreatePanel("ClassColor", 1, 1, "BOTTOM", UIParent, "BOTTOM", 0, 20)
+bottompanel:CreatePanel(template, 1, 1, "BOTTOM", UIParent, "BOTTOM", 0, 20)
 bottompanel:SetPoint("LEFT", UIParent, "LEFT", 21, 0)
 bottompanel:SetPoint("RIGHT", UIParent, "RIGHT", -21, 0)
+bottompanel:SetTemplate("Default", "Shadow")
 
 ----------------------------------------------------------------------------------------
 --	Chat background
 ----------------------------------------------------------------------------------------
 if C.chat.background == true then
 	local chatbd = CreateFrame("Frame", "ChatBackground", UIParent)
-	chatbd:CreatePanel("Transparent", C.chat.width + 7, C.chat.height + 4, "TOPLEFT", ChatFrame1, "TOPLEFT", -3, 1)
-	chatbd:SetBackdropBorderColor(T.color.r, T.color.g, T.color.b)
+	chatbd:CreatePanel("Transparent", C.chat.width + 7, C.chat.height + 4, "TOPLEFT", ChatFrame1, "TOPLEFT", -3, 1, shadow)	
+	chatbd:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
 	chatbd:SetBackdropColor(0, 0, 0, C.chat.background_alpha)
 
 	if C.chat.tabs_mouseover ~= true then
 		local chattabs = CreateFrame("Frame", "ChatTabsPanel", UIParent)
-		chattabs:CreatePanel("Transparent", chatbd:GetWidth(), 20, "BOTTOM", chatbd, "TOP", 0, 3)
-		chattabs:SetBackdropBorderColor(T.color.r, T.color.g, T.color.b)
+		chattabs:CreatePanel("Transparent", chatbd:GetWidth(), 20, "BOTTOM", chatbd, "TOP", 0, 3, shadow)
+		chattabs:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
 		chattabs:SetBackdropColor(0, 0, 0, C.chat.background_alpha)
 	end
 else
 	local leftpanel = CreateFrame("Frame", "LeftPanel", UIParent)
-	leftpanel:CreatePanel("ClassColor", 1, C.chat.height - 2, "BOTTOMLEFT", bottompanel, "LEFT", 0, 0)
+	leftpanel:CreatePanel(template, 1, C.chat.height - 2, "BOTTOMLEFT", bottompanel, "LEFT", 0, 0)
+	leftpanel:SetTemplate("Default", "Shadow")
 end
 
 ----------------------------------------------------------------------------------------
@@ -141,13 +159,13 @@ toppanel.bgl = toppanel:CreateTexture(nil, "BORDER")
 toppanel.bgl:SetPoint("RIGHT", toppanel, "CENTER", 0, 0)
 toppanel.bgl:SetSize(C.toppanel.width / 2, C.toppanel.height / 2)
 toppanel.bgl:SetTexture(C.media.blank)
-toppanel.bgl:SetGradientAlpha("HORIZONTAL", T.color.r, T.color.g, T.color.b, 0, T.color.r, T.color.g, T.color.b, 0.1)
+toppanel.bgl:SetGradientAlpha("HORIZONTAL", borderColor.r, borderColor.g, borderColor.b, 0, borderColor.r, borderColor.g, borderColor.b, 0.1)
 
 toppanel.bgr = toppanel:CreateTexture(nil, "BORDER")
 toppanel.bgr:SetPoint("LEFT", toppanel, "CENTER", 0, 0)
 toppanel.bgr:SetSize(C.toppanel.width / 2, C.toppanel.height / 2)
 toppanel.bgr:SetTexture(C.media.blank)
-toppanel.bgr:SetGradientAlpha("HORIZONTAL", T.color.r, T.color.g, T.color.b, 0.1, T.color.r, T.color.g, T.color.b, 0)
+toppanel.bgr:SetGradientAlpha("HORIZONTAL", borderColor.r, borderColor.g, borderColor.b, 0.1, borderColor.r, borderColor.g, borderColor.b, 0)
 
 toppanel.tbl = toppanel:CreateTexture(nil, "ARTWORK")
 toppanel.tbl:SetPoint("RIGHT", toppanel, "TOP", 0, 0)
@@ -159,7 +177,7 @@ toppanel.tcl = toppanel:CreateTexture(nil, "OVERLAY")
 toppanel.tcl:SetPoint("RIGHT", toppanel, "TOP", 0, 0)
 toppanel.tcl:SetSize(C.toppanel.width / 2, 1)
 toppanel.tcl:SetTexture(C.media.blank)
-toppanel.tcl:SetGradientAlpha("HORIZONTAL", T.color.r, T.color.g, T.color.b, 0, T.color.r, T.color.g, T.color.b, 1)
+toppanel.tcl:SetGradientAlpha("HORIZONTAL", borderColor.r, borderColor.g, borderColor.b, 0, borderColor.r, borderColor.g, borderColor.b, 1)
 
 toppanel.tbr = toppanel:CreateTexture(nil, "ARTWORK")
 toppanel.tbr:SetPoint("LEFT", toppanel, "TOP", 0, 0)
@@ -171,7 +189,7 @@ toppanel.tcr = toppanel:CreateTexture(nil, "OVERLAY")
 toppanel.tcr:SetPoint("LEFT", toppanel, "TOP", 0, 0)
 toppanel.tcr:SetSize(C.toppanel.width / 2, 1)
 toppanel.tcr:SetTexture(C.media.blank)
-toppanel.tcr:SetGradientAlpha("HORIZONTAL", T.color.r, T.color.g, T.color.b, 1, T.color.r, T.color.g, T.color.b, 0)
+toppanel.tcr:SetGradientAlpha("HORIZONTAL", borderColor.r, borderColor.g, borderColor.b, 1, borderColor.r, borderColor.g, borderColor.b, 0)
 
 toppanel.bbl = toppanel:CreateTexture(nil, "ARTWORK")
 toppanel.bbl:SetPoint("RIGHT", toppanel, "BOTTOM", 0, 0)
@@ -183,7 +201,7 @@ toppanel.bcl = toppanel:CreateTexture(nil, "OVERLAY")
 toppanel.bcl:SetPoint("RIGHT", toppanel, "BOTTOM", 0, 0)
 toppanel.bcl:SetSize(C.toppanel.width / 2, 1)
 toppanel.bcl:SetTexture(C.media.blank)
-toppanel.bcl:SetGradientAlpha("HORIZONTAL", T.color.r, T.color.g, T.color.b, 0, T.color.r, T.color.g, T.color.b, 1)
+toppanel.bcl:SetGradientAlpha("HORIZONTAL", borderColor.r, borderColor.g, borderColor.b, 0, borderColor.r, borderColor.g, borderColor.b, 1)
 
 toppanel.bbr = toppanel:CreateTexture(nil, "ARTWORK")
 toppanel.bbr:SetPoint("LEFT", toppanel, "BOTTOM", 0, 0)
@@ -195,4 +213,54 @@ toppanel.bcr = toppanel:CreateTexture(nil, "OVERLAY")
 toppanel.bcr:SetPoint("LEFT", toppanel, "BOTTOM", 0, 0)
 toppanel.bcr:SetSize(C.toppanel.width / 2, 1)
 toppanel.bcr:SetTexture(C.media.blank)
-toppanel.bcr:SetGradientAlpha("HORIZONTAL", T.color.r, T.color.g, T.color.b, 1, T.color.r, T.color.g, T.color.b, 0)
+toppanel.bcr:SetGradientAlpha("HORIZONTAL", borderColor.r, borderColor.g, borderColor.b, 1, borderColor.r, borderColor.g, borderColor.b, 0)
+
+----------------------------------------------------------------------------------------
+--	EF
+----------------------------------------------------------------------------------------
+if C.ef.use_actionbar_panels == true then
+	local bpanel = CreateFrame("Frame", "ActionBarPanel", bottombaranchor)
+	bpanel:SetTemplate("Default", "Shadow")
+	bpanel:SetPoint("TOP", bottombaranchor, "TOP", 0, C.actionbar.button_space)
+	if C.actionbar.split_bars == true then
+		bpanel:SetPoint("BOTTOMLEFT", SplitBarLeft, "BOTTOMLEFT", -C.actionbar.button_space, -C.actionbar.button_space)
+		bpanel:SetPoint("BOTTOMRIGHT", SplitBarRight, "BOTTOMRIGHT", C.actionbar.button_space, -C.actionbar.button_space)
+	else
+		bpanel:SetPoint("BOTTOMLEFT", bottombaranchor, "BOTTOMLEFT", -C.actionbar.button_space, -C.actionbar.button_space)
+		bpanel:SetPoint("BOTTOMRIGHT", bottombaranchor, "BOTTOMRIGHT", C.actionbar.button_space, -C.actionbar.button_space)
+	end
+
+	local rpanel = CreateFrame("Frame", nil, rightbaranchor)
+	rpanel:SetTemplate("Default", "Shadow")
+	rpanel:SetFrameLevel(1)
+	rpanel:SetFrameStrata("BACKGROUND")
+	rpanel:SetPoint("BOTTOMLEFT", rightbaranchor, "BOTTOMLEFT", -C.actionbar.button_space, -C.actionbar.button_space)
+	rpanel:SetPoint("TOPRIGHT", rightbaranchor, "TOPRIGHT", C.actionbar.button_space, C.actionbar.button_space)
+	
+	local ppanel = CreateFrame("Frame", nil, PetActionButton1)
+	ppanel:SetTemplate("Default", "Shadow")
+	ppanel:SetFrameLevel(1)
+	ppanel:SetFrameStrata("BACKGROUND")
+	ppanel:SetPoint("BOTTOMLEFT", petbaranchor, "BOTTOMLEFT", -C.actionbar.button_space, -C.actionbar.button_space)
+	ppanel:SetPoint("TOPRIGHT", petbaranchor, "TOPRIGHT", C.actionbar.button_space, C.actionbar.button_space)
+end
+
+if C.ef.use_right_toolbar then
+	if C.chat.background == true then
+		local chatbdright = CreateFrame("Frame", "ChatBackgroundRight", ChatFrame3)
+		chatbdright:CreatePanel("Transparent", C.chat.width + 7, C.chat.height + 4, "TOPLEFT", ChatFrame3, "TOPLEFT", -3, 1, shadow)
+		chatbdright:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
+		chatbdright:SetBackdropColor(0, 0, 0, C.chat.background_alpha)
+		
+		if C.chat.tabs_mouseover ~= true then
+			local chattabsright = CreateFrame("Frame", "ChatTabsPanelRight", chatbdright)
+			chattabsright:CreatePanel("Transparent", chatbdright:GetWidth(), 20, "BOTTOM", chatbdright, "TOP", 0, 3, shadow)
+			chattabsright:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
+			chattabsright:SetBackdropColor(0, 0, 0, C.chat.background_alpha)
+		end
+	else
+		local rightpanel = CreateFrame("Frame", "RightPanel", UIParent)
+		rightpanel:CreatePanel(template, 1, C.chat.height - 2, "BOTTOMRIGHT", bottompanel, "RIGHT", 0, 0)
+		rightpanel:SetTemplate("Default", "Shadow")				
+	end
+end

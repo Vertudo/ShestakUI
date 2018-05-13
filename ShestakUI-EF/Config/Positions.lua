@@ -79,3 +79,31 @@ C["position"] = {
 		["target_bar"] = {"BOTTOMLEFT", C.unitframe.portrait_enable and "oUF_Target_Portrait" or "oUF_Target", "BOTTOMRIGHT", C.unitframe.portrait_enable and 6 or 9, C.unitframe.portrait_enable and -3 or -41},	-- "T_DE/BUFF_BAR"
 	},
 }
+
+-- EF layout
+if C.ef.ef_layout then
+	-- Miscellaneous positions
+	C["position"]["minimap_buttons"] = {"TOPLEFT", Minimap, "TOPRIGHT", 3, 2}							-- Minimap buttons
+	C["position"]["minimap"] = {"TOPRIGHT", UIParent, "TOPRIGHT", -21, -21}								-- Minimap
+	C["position"]["map"] = {"BOTTOM", UIParent, "BOTTOM", -120, 320}									-- Map
+	C["position"]["bag"] = {"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -21, 157}							-- Bag
+	C["position"]["tooltip"] = {"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -21, 157}						-- Tooltip
+	C["position"]["vehicle"] = {"BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -21, 157}						-- Vehicle frame
+	C["position"]["ghost"] = {"TOP", Minimap, "BOTTOM", 0, -5}											-- Ghost frame	
+	C["position"]["threat_meter"] = {"BOTTOMLEFT", ActionButton12, "BOTTOMRIGHT", 87, 16}				-- Threat meter
+	C["position"]["raid_cooldown"] = {"TOPLEFT", UIParent, "TOPLEFT", 21, -21}							-- Raid cooldowns
+	C["position"]["player_buffs"] = {"TOPRIGHT", Minimap, "TOPLEFT", -7, 2}								-- Player buffs
+	C["position"]["raid_buffs"] = {"TOPRIGHT", Minimap, "BOTTOMRIGHT", 2, -5}							-- Raid buff reminder
+	C["position"]["top_panel"] = {"TOP", UIParent, "TOP", 0, -20}										-- Top panel
+	C["position"]["archaeology"] = {"TOPRIGHT", Minimap, "BOTTOMRIGHT", 2, -5}							-- Archaeology frame
+	C["position"]["auto_button"] = {"TOPLEFT", Minimap, "BOTTOMLEFT", -2, -27}							-- Auto button
+	C["position"]["extra_button"] = {"BOTTOM", UIParent, "BOTTOM", 0, 350}								-- Extra action button	
+	C["position"]["right_bars"] = {"RIGHT", UIParent, "RIGHT", -21, 0}									-- Right bars		
+	
+	-- UnitFrame positions
+	C["position"]["unitframes"]["target_target"] = {"TOPRIGHT", "oUF_Target", "BOTTOMRIGHT", 0, -15}	-- ToT frame
+	C["position"]["unitframes"]["pet"] = {"TOPLEFT", "oUF_Player", "BOTTOMLEFT", 0, -15}				-- Pet frame
+	C["position"]["unitframes"]["focus"] = {"TOPRIGHT", "oUF_Player", "BOTTOMRIGHT", 0, -15}			-- Focus frame
+	C["position"]["unitframes"]["focus_target"] = {"TOPLEFT", "oUF_Target", "BOTTOMLEFT", 0, -15}		-- Focus target frame	
+	C["position"]["unitframes"]["tank"] = {"BOTTOMLEFT", "ActionBarAnchor", "TOPRIGHT", 5, 5}			-- Tank frames		
+end

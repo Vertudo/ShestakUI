@@ -12,7 +12,11 @@ local function CreateOverlay(f)
 	local overlay = f:CreateTexture("$parentOverlay", "BORDER", f)
 	overlay:SetPoint("TOPLEFT", 2, -2)
 	overlay:SetPoint("BOTTOMRIGHT", -2, 2)
-	overlay:SetTexture(C.media.blank)
+	if C.ef.use_shadow then
+		overlay:SetTexture(C.media.texture)
+	else
+		overlay:SetTexture(C.media.blank)
+	end
 	overlay:SetVertexColor(0.1, 0.1, 0.1, 1)
 	f.overlay = overlay
 end
@@ -57,7 +61,26 @@ local function GetTemplate(t)
 	end
 end
 
-local function SetTemplate(f, t)
+local function CreateShadow(f)
+    if f.shadow or C.ef.use_shadow ~= true then return end
+
+    local shadow = CreateFrame("Frame", nil, f)
+    shadow:SetFrameLevel(1)
+    shadow:SetFrameStrata(f:GetFrameStrata())
+    shadow:SetPoint("TOPLEFT", -3, 3)
+    shadow:SetPoint("BOTTOMLEFT", -3, -3)
+    shadow:SetPoint("TOPRIGHT", 3, 3)
+    shadow:SetPoint("BOTTOMRIGHT", 3, -3)
+    shadow:SetBackdrop({ 
+        edgeFile = "Interface\\AddOns\\ShestakUI-EF\\Media\\Textures\\Shadow.tga", edgeSize = 3,
+        insets = {left = 5, right = 5, top = 5, bottom = 5},
+    })
+    shadow:SetBackdropColor(0, 0, 0, 0)
+    shadow:SetBackdropBorderColor(0, 0, 0, 0.8)
+    f.shadow = shadow
+end
+
+local function SetTemplate(f, t, s)
 	GetTemplate(t)
 
 	f:SetBackdrop({
@@ -77,9 +100,10 @@ local function SetTemplate(f, t)
 
 	f:SetBackdropColor(backdropr, backdropg, backdropb, backdropa)
 	f:SetBackdropBorderColor(borderr, borderg, borderb, bordera)
+	if s == "Shadow" then CreateShadow(f) end						 
 end
 
-local function CreatePanel(f, t, w, h, a1, p, a2, x, y)
+local function CreatePanel(f, t, w, h, a1, p, a2, x, y, s)
 	GetTemplate(t)
 
 	f:SetWidth(w)
@@ -107,15 +131,17 @@ local function CreatePanel(f, t, w, h, a1, p, a2, x, y)
 
 	f:SetBackdropColor(backdropr, backdropg, backdropb, backdropa)
 	f:SetBackdropBorderColor(borderr, borderg, borderb, bordera)
+	
+	if s == "Shadow" then CreateShadow(f) end						  
 end
 
-local function CreateBackdrop(f, t)
+local function CreateBackdrop(f, t, s)
 	if not t then t = "Default" end
 
 	local b = CreateFrame("Frame", "$parentBackdrop", f)
 	b:SetPoint("TOPLEFT", -2, 2)
 	b:SetPoint("BOTTOMRIGHT", 2, -2)
-	b:SetTemplate(t)
+	b:SetTemplate(t, s)
 
 	if f:GetFrameLevel() - 1 >= 0 then
 		b:SetFrameLevel(f:GetFrameLevel() - 1)
@@ -161,7 +187,12 @@ local function StyleButton(button, t, size)
 	if not size then size = 2 end
 	if button.SetHighlightTexture and not button.hover then
 		local hover = button:CreateTexture(nil, nil, self)
-		hover:SetColorTexture(1, 1, 1, 0.3)
+		if C.ef.use_custom_color then
+			local color = C.ef.custom_color;
+			hover:SetColorTexture(color.r, color.g, color.b, 0.4)
+		else
+			hover:SetColorTexture(1, 1, 1, 0.3)
+		end
 		hover:SetPoint("TOPLEFT", button, size, -size)
 		hover:SetPoint("BOTTOMRIGHT", button, -size, size)
 		button.hover = hover
@@ -199,10 +230,19 @@ end
 ----------------------------------------------------------------------------------------
 T.SetModifiedBackdrop = function(self)
 	if self:GetButtonState() == "DISABLED" then return end
-	self:SetBackdropBorderColor(T.color.r, T.color.g, T.color.b)
-	if self.overlay then
-		self.overlay:SetVertexColor(T.color.r * 0.3, T.color.g * 0.3, T.color.b * 0.3, 1)
-	end
+
+	if C.ef.use_custom_color then
+		local color = C.ef.custom_color;
+		self:SetBackdropBorderColor(color.r, color.g, color.b)
+		if self.overlay then
+			self.overlay:SetVertexColor(color.r, color.g, color.b, 0.3)
+		end		
+	else
+		self:SetBackdropBorderColor(T.color.r, T.color.g, T.color.b)
+		if self.overlay then
+			self.overlay:SetVertexColor(T.color.r * 0.3, T.color.g * 0.3, T.color.b * 0.3, 1)
+		end	
+	end	
 end
 
 T.SetOriginalBackdrop = function(self)

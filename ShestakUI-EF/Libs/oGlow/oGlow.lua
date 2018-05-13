@@ -20,7 +20,7 @@ local event_metatable = {
 local oGlow = CreateFrame("Frame", "oGlow")
 
 function oGlow:ADDON_LOADED(event, addon)
-	if addon == "ShestakUI" then
+	if addon == "ShestakUI-EF" then
 		for pipe in next, pipesTable do
 			self:EnablePipe(pipe)
 

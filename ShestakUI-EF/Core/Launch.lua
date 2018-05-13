@@ -102,7 +102,7 @@ local function InstallUI()
 end
 
 local function DisableUI()
-	DisableAddOn("ShestakUI")
+	DisableAddOn("ShestakUI-EF")
 	ReloadUI()
 end
 
@@ -220,7 +220,7 @@ OnLogon:SetScript("OnEvent", function(self, event)
 			UIParent:SetScale(C.general.uiscale)
 		end
 
-		-- Install default if we never ran ShestakUI on this character
+		-- Install default if we never ran ShestakUI-EF on this character
 		if not SavedOptionsPerChar.Install then
 			StaticPopup_Show("INSTALL_UI")
 		end

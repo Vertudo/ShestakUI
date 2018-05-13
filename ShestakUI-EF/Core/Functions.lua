@@ -1212,7 +1212,11 @@ local setBarTicks = function(Castbar, ticknum)
 			if not ticks[k] then
 				ticks[k] = Castbar:CreateTexture(nil, "OVERLAY")
 				ticks[k]:SetTexture(C.media.texture)
-				ticks[k]:SetVertexColor(unpack(C.media.border_color))
+				if C.ef.use_custom_color then 
+					ticks[k]:SetVertexColor(C.ef.custom_color.r, C.ef.custom_color.g, C.ef.custom_color.b, 0.4)
+				else
+					ticks[k]:SetVertexColor(unpack(C.media.border_color))
+				end				
 				ticks[k]:SetWidth(1)
 				ticks[k]:SetHeight(Castbar:GetHeight())
 				ticks[k]:SetDrawLayer("OVERLAY", 7)
@@ -1274,8 +1278,12 @@ T.PostCastStart = function(Castbar, unit, name, castid)
 			local _, class = UnitClass("player")
 			local r, g, b = unpack(T.oUF_colors.class[class])
 			if C.unitframe.own_color == true then
-				Castbar:SetStatusBarColor(unpack(C.unitframe.uf_color))
-				Castbar.bg:SetVertexColor(C.unitframe.uf_color[1], C.unitframe.uf_color[2], C.unitframe.uf_color[3], 0.2)
+				Castbar:SetStatusBarColor(unpack(C.unitframe.uf_color))				
+				if C.ef.use_custom_color then 
+					Castbar.bg:SetVertexColor(C.ef.custom_color.r, C.ef.custom_color.g, C.C.ef.custom_color.b, 0.4)
+				else
+					Castbar.bg:SetVertexColor(C.unitframe.uf_color[1], C.unitframe.uf_color[2], C.unitframe.uf_color[3], 0.2)				
+				end				
 			else
 				if b then
 					Castbar:SetStatusBarColor(r, g, b)
@@ -1351,7 +1359,11 @@ T.PostChannelStart = function(Castbar, unit, name)
 			local r, g, b = unpack(T.oUF_colors.class[class])
 			if C.unitframe.own_color == true then
 				Castbar:SetStatusBarColor(unpack(C.unitframe.uf_color))
-				Castbar.bg:SetVertexColor(C.unitframe.uf_color[1], C.unitframe.uf_color[2], C.unitframe.uf_color[3], 0.2)
+				if C.ef.use_custom_color then 
+					Castbar.bg:SetVertexColor(C.ef.custom_color.r, C.ef.custom_color.g, C.C.ef.custom_color.b, 0.4)
+				else
+					Castbar.bg:SetVertexColor(C.unitframe.uf_color[1], C.unitframe.uf_color[2], C.unitframe.uf_color[3], 0.2)				
+				end					
 			else
 				if b then
 					Castbar:SetStatusBarColor(r, g, b)
