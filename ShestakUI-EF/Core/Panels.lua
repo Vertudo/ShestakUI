@@ -258,6 +258,8 @@ if C.ef.use_right_toolbar then
 			chattabsright:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b)
 			chattabsright:SetBackdropColor(0, 0, 0, C.chat.background_alpha)
 		end
+		
+		ChatFrame3Tab:SetPoint("BOTTOMLEFT", ChatBackgroundRight, "TOPLEFT", 2, 0)
 	else
 		local rightpanel = CreateFrame("Frame", "RightPanel", UIParent)
 		rightpanel:CreatePanel(template, 1, C.chat.height - 2, "BOTTOMRIGHT", bottompanel, "RIGHT", 0, 0)

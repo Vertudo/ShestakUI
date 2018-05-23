@@ -246,8 +246,18 @@ local function SetupChatPosAndFont(self)
 				ChatFrame2Tab:SetText("")
 				ChatFrame2Tab.SetText = T.dummy
 				ChatFrame2Tab:SetWidth(0.001)
-				ChatFrame2Tab.SetWidth = T.dummy
 			end
+		elseif i == 3 and C.ef.use_right_toolbar == true then
+			FCF_UnDockFrame(chat)
+			chat:ClearAllPoints()
+			chat:SetSize(C.chat.width, C.chat.height)
+			if C.chat.background == true then
+				chat:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5] + 4)
+			else
+				chat:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5])
+			end
+			chat:SetJustifyH("RIGHT")
+			FCF_SavePositionAndDimensions(chat)
 		end
 	end
 

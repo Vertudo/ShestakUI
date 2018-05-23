@@ -1,7 +1,7 @@
 ﻿local T, C, L, _ = unpack(select(2, ...))
 
 ----------------------------------------------------------------------------------------
---	ShestakUI fonts configuration file
+--	ShestakUI Fonts configuration file
 --	BACKUP THIS FILE BEFORE UPDATING!
 ----------------------------------------------------------------------------------------
 --	Configuration example:
@@ -192,10 +192,10 @@ if T.client == "zhTW" then
 	C["font"].bags_font_style = "OUTLINE"
 	C["font"].bags_font_shadow = true
 elseif T.client == "zhCN" then
-	C["media"].normal_font = "Fonts\\ARKai_T.ttf"
-	C["media"].pixel_font = "Fonts\\ARKai_C.ttf"
-	C["media"].pixel_font_style = "OUTLINE"
-	C["media"].pixel_font_size = 11
+	C["Media"].normal_font = "Fonts\\ARKai_T.ttf"
+	C["Media"].pixel_font = "Fonts\\ARKai_C.ttf"
+	C["Media"].pixel_font_style = "OUTLINE"
+	C["Media"].pixel_font_size = 11
 
 	C["font"].stats_font = "Fonts\\ARKai_T.ttf"
 	C["font"].stats_font_size = 12
@@ -273,7 +273,7 @@ elseif T.client == "zhCN" then
 end
 
 ----------------------------------------------------------------------------------------
---	EF custom fonts
+--	EF custom Fonts
 ----------------------------------------------------------------------------------------
 if C.ef.use_custom_fonts then
 	C["media"].visitor_font = [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Visitor.ttf]]				-- Visitor font
@@ -291,4 +291,30 @@ if C.ef.use_custom_fonts then
 	
 	-- Chat font
 	C["font"].chat_font = C.media.sans_narrow_font
+	
+	-- Register additional Fonts
+	local LSM = LibStub('LibSharedMedia-3.0')
+	
+	LSM:Register("font", "Roboto Condensed Bold", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\roboto.ttf]], LSM.LOCALE_BIT_western + LSM.LOCALE_BIT_ruRU)
+	LSM:Register("font", "BigNoodleTitlingCyr", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\BigNoodleTitlingCyr.ttf]], LSM.LOCALE_BIT_western + LSM.LOCALE_BIT_ruRU)
+	LSM:Register("font", "Lato Bold", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Lato-Bold.ttf]], LSM.LOCALE_BIT_western + LSM.LOCALE_BIT_ruRU)
+	LSM:Register("font", "Lato Regular", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Lato-Regular.ttf]], LSM.LOCALE_BIT_western + LSM.LOCALE_BIT_ruRU)
+	
+	LSM:Register("font", "Accidental Presidency", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Accidental_Presidency.ttf]])
+	LSM:Register("font", "Doris PP", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\DORISBR.TTF]])
+	LSM:Register("font", "KGSmallTownSouthernGirl", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\KGSmallTownSouthernGirl.ttf]])	
+	
+	LSM:Register("font", "Buffet Script", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Buffet_Script.ttf]])
+	LSM:Register("font", "Durandal Light", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Durandal_Light.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Intro Black", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Intro_Black.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "KellySlab", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\KellySlab.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Lobster", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Lobster.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Neucha", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Neucha.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Old Cyrillic", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\cyrillic_old.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Rubino", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Rubino_Plain.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "RussoOne", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\RussoOne.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "StalinistOne", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\StalinistOne.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Trafaret", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Trafaret.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "UbuntuCondensed", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\UbuntuCondensed.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)
+	LSM:Register("font", "Univers", [[Interface\AddOns\ShestakUI-EF\Media\Fonts\Univers.ttf]], LSM.LOCALE_BIT_ruRU + LSM.LOCALE_BIT_western)	
 end

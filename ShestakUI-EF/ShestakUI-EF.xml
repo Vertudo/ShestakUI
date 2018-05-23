@@ -26,6 +26,9 @@
 	<Script file="Config\DataText.lua"/>
 	<Script file="Libs\LiteStats\LiteStats.lua"/>
 	<Script file="Modules\UnitFrames\Colors.lua"/>
+	<Script file="Libs\LibStub\LibStub.lua"/>
+	<Script file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
+	<Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 
 	<Script file="Config\Filters\Announcements.lua"/>
 	<Script file="Config\Filters\ArenaControl.lua"/>
@@ -231,6 +234,7 @@
 	<Script file="Modules\Skins\Rematch.lua"/>
 	<Script file="Modules\Skins\Postal.lua"/>
 	<Script file="Modules\Skins\lsToasts.lua"/>
+	<Script file="Modules\Skins\ExRT.lua"/>
 
 	<Script file="Modules\Tooltip\Tooltip.lua"/>
 	<Script file="Modules\Tooltip\HyperLink.lua"/>

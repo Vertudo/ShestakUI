@@ -79,6 +79,7 @@ end)
 local damagemeter = false
 
 local LootShow = function()
+	ChatFrame3:Show()
 	ChatFrame3:ClearAllPoints()	
 	if C.chat.background == true then
 		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5]+4)
@@ -87,22 +88,30 @@ local LootShow = function()
 		else
 			TooltipAnchor:SetPoint("BOTTOMRIGHT", ChatTabsPanelRight, "TOPRIGHT", 0, 3)
 		end
+		
+		ChatFrame3Tab:Hide()
+		ChatFrame3Tab:SetPoint("BOTTOMLEFT", ChatFrame3, "TOPLEFT", 2, 2)
+		ChatFrame3Tab:Show()
 	else
-		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5]+4)
+		ChatFrame3:SetPoint("BOTTOMRIGHT", C.position.chat[2], "BOTTOMRIGHT", -C.position.chat[4] - 1, C.position.chat[5])
 		TooltipAnchor:SetPoint("BOTTOMRIGHT", RightPanel, "TOPRIGHT", 0, 3)
 		RightPanel:Show()			
 	end
-	lootButton.t:SetAlpha(1)
-	--ChatFrame3Tab:Show()
+	lootButton.t:SetAlpha(1)	
 	SavedOptionsPerChar.LootFrame = true
 end
 
 local LootHide = function()
+	ChatFrame3:Hide()
 	ChatFrame3:ClearAllPoints()
 	ChatFrame3:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMRIGHT", 20, 0)	
-	if C.chat.background ~= true then RightPanel:Hide() end													
-	lootButton.t:SetAlpha(0)
-	--ChatFrame3Tab:Hide()
+	ChatFrame3Tab:ClearAllPoints()
+	if C.chat.background == true then 
+		ChatFrame3Tab:Hide()
+	else
+		RightPanel:Hide() 
+	end													
+	lootButton.t:SetAlpha(0)	
 	SavedOptionsPerChar.LootFrame = false
 end
 
@@ -162,6 +171,9 @@ local detailsEmbedInit = function()
 	
 	local width = C.chat.width / 2
 	local height = C.chat.height - 2
+	if C.chat.background then
+		height = height + 20 
+	end
 	
 	EmbedDetailsWindow(detailsInstances[1], width, height, 'BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', -(width+23), 23)
 	EmbedDetailsWindow(detailsInstances[2], width, height, 'BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', -23, 23)	
@@ -234,7 +246,7 @@ function EmbedDetailsWindow(window, width, height, point, relativeFrame, relativ
 	window:ChangeSkin()
 
 	if (window.skin ~= "Forced Square") then
-		if (AS:CheckOption("DetailsBackdrop")) then
+		if C.chat.background == true then
 			window:ShowSideBars()
 		else
 			window:HideSideBars()
@@ -343,7 +355,7 @@ frame:HookScript("OnEvent", function(self, event)
 		else
 			damagemeter = false
 		end		
-		lootFrameInit()
+		--lootFrameInit()
 		if SavedOptionsPerChar.LootFrame == nil then SavedOptionsPerChar.LootFrame = true end
 		if SavedOptionsPerChar.DamageMeter == nil then SavedOptionsPerChar.DamageMeter = false end
 		if SavedOptionsPerChar.LootFrame == true and damagemeter ~= false then

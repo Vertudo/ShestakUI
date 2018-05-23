@@ -1375,7 +1375,11 @@ end
 if C.unitframe.show_target_target == true then
 	local targettarget = oUF:Spawn("targettarget", "oUF_TargetTarget")
 	targettarget:SetPoint(unpack(C.position.unitframes.target_target))
-	targettarget:SetSize(105, 16)
+	if C.ef.ef_layout then
+		targettarget:SetSize(105, 13)
+	else
+		targettarget:SetSize(105, 16)
+	end
 end
 
 if C.unitframe.show_boss == true then

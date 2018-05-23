@@ -51,4 +51,16 @@ frame:SetScript("OnEvent", function(self, event)
 			Skin_WeakAuras(WeakAuras.regions[weakAura].region)
 		end
 	end
+	
+	local buttons = {
+		"myparentButton",
+		"mymaximizeButton"
+	}
+	
+	for i = 1, getn(buttons) do
+		local frame = _G[buttons[i]]
+		if frame then
+			frame:SkinButton()
+		end
+	end	
 end)

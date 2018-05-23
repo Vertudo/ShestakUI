@@ -590,7 +590,10 @@ C["ef"] = {
 	["custom_color"] = {r = 0.1, g = 0.5, b = 0.9},	-- Color if ["use_custom_color"] = true
 	["use_shadow"] = true,							-- Set shadow on frames
 	["use_actionbar_panels"] = true,				-- Set shadow panels under bars
-	["use_right_toolbar"] = false,					-- Switch on right toolbar	
+	["use_right_toolbar"] = true,					-- Switch on right toolbar	
 	["right_toolbar_mouseover"] = false,			-- Toolbar on mouseover	
 	["use_custom_fonts"] = true,					-- Custom Fonts
+	["skins"] = {
+		["exrt"] = true,
+	}
 }	
